@@ -1,0 +1,11 @@
+{
+  "id": "aios",
+  "name": "AIOS Kernel",
+  "description": "Routes LLM calls through the AIOS scheduler",
+  "providers": ["aios"],
+  "providerAuthEnvVars": {},
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}
