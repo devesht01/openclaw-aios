@@ -1,18 +1,18 @@
 {
-  "name": "@local/openclaw-aios",
+  "name": "@devesht01/openclaw-aios",
   "version": "1.0.0",
   "type": "module",
   "openclaw": {
     "extensions": ["./index.ts"],
     "providers": ["aios"],
-"hooks": [],
+    "hooks": [],
     "compat": {
-      "pluginApi": ">=2026.3.24-beta.2",
-      "minGatewayVersion": "2026.3.24-beta.2"
+      "pluginApi": ">=2026.4.3",
+      "minGatewayVersion": "2026.4.3"
     },
     "build": {
-      "openclawVersion": "2026.3.24-beta.2",
-      "pluginSdkVersion": "2026.3.24-beta.2"
+      "openclawVersion": "2026.4.3",
+      "pluginSdkVersion": "2026.4.3"
     }
   }
 }
