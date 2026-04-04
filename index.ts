@@ -3,7 +3,7 @@ import { ensureModelAllowlistEntry } from "openclaw/plugin-sdk/provider-onboard"
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
-console.log("plugin file is running");
+//console.log("plugin file is running");
 const AIOS_URL = "http://localhost:8000";
 
 export default definePluginEntry({
@@ -13,7 +13,7 @@ export default definePluginEntry({
 
   register(api) {
 api.on("gateway_start", async () => {
-  console.log("AIOS gateway start hook fired");
+  //console.log("AIOS gateway start hook fired");
   try {
     const res = await fetch(`${AIOS_URL}/core/llms/list`);
     const data = await res.json();
@@ -95,7 +95,7 @@ resolveSyntheticAuth: () => ({
       }),
 
       createStreamFn: (ctx) => {
-        console.log("[AIOS] createStreamFn called", ctx.model?.baseUrl, ctx.model?.api);
+        //console.log("[AIOS] createStreamFn called", ctx.model?.baseUrl, ctx.model?.api);
 
         return (model, context, options) => {
           const { AssistantMessageEventStream } = require("@mariozechner/pi-ai");
@@ -164,7 +164,7 @@ const llmsRes = await fetch(`${AIOS_URL}/core/llms/list`);
 const llmsData = await llmsRes.json();
 const llmInfo = (llmsData?.llms ?? []).find((l: any) => l.name === model.id);
 const backend = llmInfo?.backend ?? "anthropic";
-console.log("[AIOS] sending messages:", JSON.stringify(messages, null, 2));
+//console.log("[AIOS] sending messages:", JSON.stringify(messages, null, 2));
               let data: any;
 let retries = 0;
 while (true) {
@@ -201,9 +201,9 @@ while (true) {
 
   break;
 }
-console.log("[AIOS] full response:", JSON.stringify(data, null, 2));
+//console.log("[AIOS] full response:", JSON.stringify(data, null, 2));
               const text = data?.response?.response_message ?? "";
-console.log("[AIOS] raw response_message:", data?.response?.response_message);
+//console.log("[AIOS] raw response_message:", data?.response?.response_message);
 
 
               const toolCallMatch = text.match(/<function_calls>([\s\S]*?)<\/function_calls>/);
