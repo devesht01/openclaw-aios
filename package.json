@@ -1,6 +1,6 @@
 {
   "name": "@devesht01/openclaw-aios",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "openclaw": {
     "extensions": ["./index.ts"],
