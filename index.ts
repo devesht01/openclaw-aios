@@ -208,17 +208,31 @@ while (true) {
 
               const toolCallMatch = text.match(/<function_calls>([\s\S]*?)<\/function_calls>/);
 if (toolCallMatch) {
+  const textBefore = text.slice(0, text.indexOf("<function_calls>")).trim();
+  if (textBefore) {
+    const textBlock = { type: "text" as const, text: textBefore };
+    output.content.push(textBlock);
+    stream.push({ type: "text_start", contentIndex: 0, partial: output });
+    stream.push({ type: "text_delta", contentIndex: 0, delta: textBefore, partial: output });
+    stream.push({ type: "text_end", contentIndex: 0, content: textBefore, partial: output });
+  }
   const invokeRegex = /<invoke name="([^"]+)"(?:\s*\/>|>([\s\S]*?)<\/invoke>)/g;
   let invokeMatch;
   while ((invokeMatch = invokeRegex.exec(toolCallMatch[1])) !== null) {
     const toolName = invokeMatch[1];
     const paramsXml = invokeMatch[2] ?? "";
-    const toolArgs: Record<string, string> = {};
-    const paramRegex = /<parameter name="([^"]+)">([\s\S]*?)<\/parameter>/g;
-    let paramMatch;
-    while ((paramMatch = paramRegex.exec(paramsXml)) !== null) {
-      toolArgs[paramMatch[1]] = paramMatch[2];
-    }
+    const toolArgs: Record<string, any> = {};
+const paramRegex = /<parameter name="([^"]+)">([\s\S]*?)<\/parameter>/g;
+let paramMatch;
+while ((paramMatch = paramRegex.exec(paramsXml)) !== null) {
+  const key = paramMatch[1];
+  const value = paramMatch[2];
+  try {
+    toolArgs[key] = JSON.parse(value);
+  } catch {
+    toolArgs[key] = value;
+  }
+}
     const block = {
       type: "toolCall" as const,
       id: `tool_${Date.now()}`,
